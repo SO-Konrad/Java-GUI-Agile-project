@@ -195,26 +195,37 @@ public class DisplayUserStory extends JDialog {
 			
 			{
 				JButton modifyButton = new JButton("Modify");
+				JButton deleteButton = new JButton("Delete");
+				{
+					UserStory us2 = us;
+					deleteButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							us2.removeUserStory(us2);
+							USICMS.getInstance().removeListModelElement(us2, us2.getStatus());
+							dispose();
+						}
+					});
+					deleteButton.setActionCommand("Cancel");
+					buttonPane.add(deleteButton);
+				}
 				modifyButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+
+						buttonPane.remove(modifyButton);
+						buttonPane.remove(deleteButton);
+						buttonPane.repaint();
+
+						userStoryNameTextField.setEditable(true);
+						userStoryIDTextField.setEditable(true);
+						estDuratoinTextField.setEditable(true);
+						estEffortTextField.setEditable(true);
+						storyPointTextField.setEditable(true);
+						userStoryDescTextPane.setEditable(true);
+						//us2.modifyUserStory(us2);
 					}
 				});
 				modifyButton.setActionCommand("Cancel");
 				buttonPane.add(modifyButton);
-			}
-			UserStory us2 = us;
-			{
-				JButton deleteButton = new JButton("Delete");
-				deleteButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						us2.removeUserStory(us2);
-						USICMS.getInstance().removeListModelElement(us);
-						dispose();
-					}
-				});
-				deleteButton.setActionCommand("Cancel");
-				buttonPane.add(deleteButton);
 			}
 			{
 				JButton cancelButton = new JButton("Close");

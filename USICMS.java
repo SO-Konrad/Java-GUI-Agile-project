@@ -59,13 +59,26 @@ public class USICMS {
 		switch (uss) {
 		case TODO:
 			listToDoModel.addElement(us.getId() + "--" + us.getName());
-			listDoneModel.removeElement(obj)
 			break;
 		case INPROGRESS:
 			listInProgressModel.addElement(us.getId() + "--" + us.getName());
 			break;
 		case DONE:
 			listDoneModel.addElement(us.getId() + "--" + us.getName());
+			break;
+		}
+	}
+
+	public void removeListModelElement(UserStory us, String uss) {
+		switch (uss) {
+		case "ToDo":
+			listToDoModel.removeElement(us.getId() + "--" + us.getName());
+			break;
+		case "InProgress":
+			listInProgressModel.removeElement(us.getId() + "--" + us.getName());
+			break;
+		case "Done":
+			listDoneModel.removeElement(us.getId() + "--" + us.getName());
 			break;
 		}
 	}

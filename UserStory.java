@@ -17,13 +17,14 @@
  ******************************************************************************/
 package org.dapeng.usicms.model;
 
-import java.io.FileWriter;
+import java.io.*;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.regex.*;
 
 import org.dapeng.usicms.handler.ProjectLevelConfigs;
 
@@ -136,6 +137,7 @@ public class UserStory {
 				.append(ProjectLevelConfigs.RECORD_SPLITTER);
 		try {
 			FileWriter fw = new FileWriter(ProjectLevelConfigs.projectName + ".sesp", true);
+
 			fw.write(sb.toString());
 			fw.close();
 		} catch (Exception ex) {
@@ -145,7 +147,35 @@ public class UserStory {
 		System.out.println(ProjectLevelConfigs.userStories.get(0).getId());
 	}
 
+	public void modifyUserStory(UserStory us) {
+	}
+
 	public void removeUserStory(UserStory us) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(us.getName()).append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getId())
+				.append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getDuration())
+				.append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getEstimate())
+				.append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getProject())
+				.append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getStoryPoint())
+				.append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getDescription())
+				.append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getStatus())
+				.append(ProjectLevelConfigs.FIELD_SPLITTER).append(us.getType())
+				.append(ProjectLevelConfigs.RECORD_SPLITTER);
+
+			
+			
+
+			try {
+				String fileText = readFile(ProjectLevelConfigs.projectName +".sesp", StandardCharsets.US_ASCII);
+				String userStory = sb.toString();
+
+				String newText = fileText.replaceAll(Pattern.quote(userStory),"");
+				FileWriter fw = new FileWriter(ProjectLevelConfigs.projectName + ".sesp");
+				fw.write(newText);
+				fw.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		ProjectLevelConfigs.userStories.remove(us);
 	}
 
